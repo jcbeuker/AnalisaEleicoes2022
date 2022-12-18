@@ -45,8 +45,30 @@ DetalhaMG <- detalhe_votacao[detalhe_votacao$sg_uf == "MG",]
 # Estatísticas descritivas das variaveis
 summary(DetalhaMG[,7:17])
 
-#Coeficientes de correlação de Pearson para cada par de variáveis
+# Coeficientes de correlação de Pearson para cada par de variáveis
 rho <- rcorr(as.matrix(DetalhaMG[,7:17]), type="pearson")
 
 corr_coef <- rho$r # matriz de correlações
 corr_sig <- round(rho$P, 5) # matriz com p-valor dos coeficientes
+
+# Elaboação de um mapa de calor das correlações de Pearson entre as variáveis
+ggplotly(
+  DetalhaMG[,7:17] %>%
+    cor() %>%
+    melt() %>%
+    rename(Correlação = value) %>%
+    ggplot() +
+    geom_tile(aes(x = Var1, y = Var2, fill = Correlação)) +
+    geom_text(aes(x = Var1, y = Var2, label = format(Correlação, digits = 1)),
+              size = 5) +
+    scale_fill_viridis_b() +
+    labs(x = NULL, y = NULL) +
+    theme_bw()
+)
+
+# Visualização das distribuições das variáveis, scatters, valores das correlações
+chart.Correlation(DetalhaMG[,7:17], histogram = TRUE, pch = "+")
+
+# Teste de efericidade de Bartlett
+cortest.bartlett(DetalhaMG[,7:17])
+
