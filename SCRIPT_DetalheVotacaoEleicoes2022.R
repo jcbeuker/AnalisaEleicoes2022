@@ -7,7 +7,7 @@
 ################################################################################
 # Pacotes necessários
 pacotes <- c("tidyverse","ggrepel","reshape2","knitr","kableExtra",
-             "PerformanceAnalytics","factoextra","psych","tigris")
+             "PerformanceAnalytics","factoextra","psych","tigris","dplyr")
 
 if(sum(as.numeric(!pacotes %in% installed.packages())) != 0){
   instalador <- pacotes[!pacotes %in% installed.packages()]
@@ -26,3 +26,9 @@ detalhe_votacao <- read_delim("detalhe_votacao.csv",
                       locale = locale(encoding = "WINDOWS-1252"),
                       trim_ws = TRUE)
 View(detalhe_votacao)
+
+# Objeto detalhes de MG
+DetalhaMG <- detalhe_votacao[detalhe_votacao$sg_uf == "MG",]
+
+# Resumo de detalhes de MG
+summary(DetalhaMG)
