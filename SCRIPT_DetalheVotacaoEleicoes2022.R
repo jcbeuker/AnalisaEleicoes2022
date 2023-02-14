@@ -69,6 +69,6 @@ ggplotly(
 # Visualização das distribuições das variáveis, scatters, valores das correlações
 chart.Correlation(DetalhaMG[,7:17], histogram = TRUE, pch = "+")
 
-# Teste de efericidade de Bartlett
+# Teste de esfericidade de Bartlett
 cortest.bartlett(DetalhaMG[,7:17])
 
